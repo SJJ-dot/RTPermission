@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.Window;
@@ -49,7 +48,6 @@ public class PermissionRequestActivity extends Activity {
     }
 
     public static void startActivity(Context context, int requestCode,PermissionRequest request) {
-        Log.e("logger", "startActivity");
         PermissionRequestActivity.runnables.append(requestCode,request);
         Intent intent = new Intent(context, PermissionRequestActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
