@@ -1,6 +1,7 @@
 package com.sjianjun.permission;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -32,6 +33,7 @@ public class PermissionFragment extends Fragment {
                 list.add(new Permission(s, true, false));
             }
             callback.onRequestPermissionsResult(list);
+            finishActivity();
         } else {
             List<Permission> list = new ArrayList<>(permissions.length);
             List<String> permission_denied = new ArrayList<>(permissions.length);
@@ -49,6 +51,7 @@ public class PermissionFragment extends Fragment {
                 requestPermissions(permission_denied.toArray(strings), requestCode);
             } else {
                 callback.onRequestPermissionsResult(list);
+                finishActivity();
             }
 
         }
@@ -68,6 +71,7 @@ public class PermissionFragment extends Fragment {
                 list.add(new Permission(permissionName, granted, shouldShowRequestPermissionRationale(permissionName)));
             }
             permissionCallback.onRequestPermissionsResult(list);
+            finishActivity();
         }else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
@@ -75,5 +79,12 @@ public class PermissionFragment extends Fragment {
 
     boolean isMarshmallow() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
+    }
+
+    private void finishActivity() {
+        Activity activity = getActivity();
+        if (activity instanceof PermissionRequestActivity) {
+            activity.finish();
+        }
     }
 }

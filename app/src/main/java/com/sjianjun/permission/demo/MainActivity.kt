@@ -19,6 +19,5 @@ class MainActivity : AppCompatActivity() {
             Log.e(it.isGranted())
             Log.e(it)
         }
-
     }
 }

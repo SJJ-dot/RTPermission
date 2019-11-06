@@ -2,9 +2,11 @@ package com.sjianjun.permission.util;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Context;
 
 import com.sjianjun.permission.PermissionCallback;
 import com.sjianjun.permission.PermissionFragment;
+import com.sjianjun.permission.PermissionRequestActivity;
 import com.sjianjun.permission.model.Permission;
 
 import java.util.List;
@@ -22,11 +24,27 @@ public final class PermissionUtil {
     private PermissionUtil() {
     }
 
-    public static void requestPermissions(Activity activity, String[] permissions, PermissionCallback callback) {
-        PermissionFragment fragment = getPermissionsFragment(activity);
-        fragment.requestPermissions(permissions,callback,requestCode.getAndIncrement());
+    public static void requestPermissions(Context context, final String[] permissions, final PermissionCallback callback) {
+        if (context instanceof Activity) {
+            requestPermissions((Activity) context, permissions, callback);
+        } else {
+           PermissionRequestActivity.startActivity(context,requestCode.getAndIncrement(),new PermissionRequestActivity.PermissionRequest() {
+               @Override
+               public void run(PermissionRequestActivity activity) {
+                   PermissionFragment fragment = getPermissionsFragment(activity);
+                   fragment.requestPermissions(permissions, callback, requestCode.getAndIncrement());
+               }
+           });
+        }
 
     }
+
+    public static void requestPermissions(Activity activity, String[] permissions, PermissionCallback callback) {
+        PermissionFragment fragment = getPermissionsFragment(activity);
+        fragment.requestPermissions(permissions, callback, requestCode.getAndIncrement());
+
+    }
+
     private static PermissionFragment getPermissionsFragment(Activity activity) {
         FragmentManager manager = activity.getFragmentManager();
         PermissionFragment fragment = (PermissionFragment) manager.findFragmentByTag(TAG);
