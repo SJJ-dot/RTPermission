@@ -1,18 +1,18 @@
-### 添加存储库
+### 添加存储库 [![](https://jitpack.io/v/SJJ-dot/RTPermission.svg)](https://jitpack.io/#SJJ-dot/RTPermission)
 - 项目根目录build.gradle添加存储库
 ```groovy
-allprojects {
-    repositories {
-        ...
-        maven {
-            url "https://raw.githubusercontent.com/SJJ-dot/repo/master/"
-        }
-    }
-}
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
 ```
 - 依赖
 ```groovy
-    implementation 'com.sjianjun:permission-request:1.1.4'
+	dependencies {
+	        implementation 'com.github.SJJ-dot:RTPermission:Tag'
+	}
 ```
 - 代码
 ```kotlin
